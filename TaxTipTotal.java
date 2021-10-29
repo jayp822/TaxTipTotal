@@ -1,10 +1,4 @@
-// Create a JavaFX application that lets the user 
-// enter the food charge for a meal at a restaurant. 
-// When a button is clicked, the application should 
-// calculate and display the amount of an 18 percent tip 
-// on the total food charge, 7 percent sales tax, and the 
-// total of all three amounts.
-
+// I used JavaFX to create a Tip + Total + Tax calculator for a resturant meal
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -20,6 +14,8 @@ public class TaxTipTotal extends Application{
 
    private Label foodLabel;
    private TextField foodTextField;
+   private Label tipLabel;
+   private TextField tipTextField;
    private Button calculate;
    private Label resultLabel;
    
@@ -33,6 +29,8 @@ public class TaxTipTotal extends Application{
    {
       foodLabel = new Label("Enter  your  food  charge  for  the  meal:  ");
       foodTextField = new TextField();
+      tipLabel = new Label("Enter the percentage of tip you want to give (18 percent = .18): ");
+      tipTextField = new TextField();
       calculate = new Button("Calculate");
       
       calculate.setOnAction(
@@ -40,7 +38,7 @@ public class TaxTipTotal extends Application{
          
          
          //Get tip
-            double tip = Double.parseDouble(foodTextField.getText()) * .18 ; 
+            double tip = Double.parseDouble(foodTextField.getText()) * Double.parseDouble(tipTextField.getText()) ; 
          
          //Get salesTax
             double salesTax = Double.parseDouble(foodTextField.getText()) * .07;
@@ -48,7 +46,7 @@ public class TaxTipTotal extends Application{
          //Get total
             double total = Double.parseDouble(foodTextField.getText()) + salesTax + tip;
             
-            resultLabel.setText(String.format("Your total is %.2f dollars including an 18 percent tip and 7 percent tax", total));
+            resultLabel.setText(String.format("Your total is %.2f dollars including a %.2f percent tip and 7 percent tax", total,tip));
          
          }
          );
@@ -56,7 +54,7 @@ public class TaxTipTotal extends Application{
       resultLabel = new Label();
       
       
-      HBox hb = new HBox(10,foodLabel, foodTextField, calculate);
+      HBox hb = new HBox(20,foodLabel, foodTextField, tipLabel, tipTextField, calculate);
       VBox vb = new VBox(10, hb, calculate, resultLabel);
       
       hb.setPadding(new Insets(10));
@@ -66,7 +64,7 @@ public class TaxTipTotal extends Application{
       
    
    
-      Scene scene = new Scene(vb, 500, 300);
+      Scene scene = new Scene(vb, 1000, 300);
       
       s.setScene(scene);
       s.setTitle("Tax Tip Total");
